@@ -14,6 +14,7 @@ class CharactersPayload(
         class Characters(
             @SerializedName("id") val Id: String,
             val name: String,
+            val description: String,
             @SerializedName("thumbnail") val image: Thumbnail){
 
             class Thumbnail(val path : String, val extension : String)

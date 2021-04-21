@@ -3,4 +3,7 @@
     <string name="error_in_list">Não a nada na lista</string>
     <string name="update_list">Atualizar</string>
     <string name="character_photo">character Photo</string>
+    <string name="actor">Personagem</string>
+    <string name="image_character">personagem</string>
+    <string name="hq_price">HQ de maior valor</string>
 </resources>

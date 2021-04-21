@@ -12,5 +12,6 @@ enum class ImageSize(val size: String){
     LARGE("large"),
     XLARGE("xlarge"),
     FANTASTIC("fantastic"),
-    AMAZING("amazing")
+    AMAZING("amazing"),
+    UNCANNY("uncanny")
 }

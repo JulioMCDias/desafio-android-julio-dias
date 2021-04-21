@@ -4,7 +4,7 @@ import com.jlmcdeveloper.desafio_android_julio_dias.data.api.ApiEndPoint
 import com.jlmcdeveloper.desafio_android_julio_dias.data.api.MarvelDataSource
 import com.jlmcdeveloper.desafio_android_julio_dias.data.model.Character
 
-class RepositoryCharacter(private val marvelDataSource: MarvelDataSource, private val character: Character) {
+class RepositoryCharacter(private val marvelDataSource: MarvelDataSource, val character: Character) {
 
     val listCharacter = mutableListOf<Character>()
     var running = false
@@ -30,6 +30,8 @@ class RepositoryCharacter(private val marvelDataSource: MarvelDataSource, privat
             character.id = character1.id
             character.name = character1.name
             character.urlImage = character1.urlImage
+            character.description = character1.description
+            character.extension = character1.extension
         }
     }
 

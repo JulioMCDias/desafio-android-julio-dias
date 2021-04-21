@@ -1,6 +1,7 @@
 package com.jlmcdeveloper.desafio_android_julio_dias.ui.main
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
@@ -15,6 +16,7 @@ import com.jlmcdeveloper.desafio_android_julio_dias.databinding.ItemLoadingBindi
 import com.jlmcdeveloper.desafio_android_julio_dias.ui.baseholder.BaseViewHolder
 import com.jlmcdeveloper.desafio_android_julio_dias.ui.baseholder.EmptyHolder
 import com.jlmcdeveloper.desafio_android_julio_dias.ui.baseholder.LoadingHolder
+import com.jlmcdeveloper.desafio_android_julio_dias.ui.character.CharacterActivity
 
 class RepositoryAdapter(
     private val viewModel: MainViewModel,
@@ -99,7 +101,7 @@ class RepositoryAdapter(
                 if (item != null) {
                     setCharacter(item)
                 }
-                //context.startActivity(Intent(context, PullRequestActivity::class.java))
+                context.startActivity(Intent(context, CharacterActivity::class.java))
             }
         }
     }

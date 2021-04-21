@@ -9,6 +9,7 @@ import com.squareup.picasso.Picasso
 data class Character(
     var id : String,
     var name: String,
+    var description: String,
     var urlImage: String,
     var extension: String
     ){
@@ -16,10 +17,11 @@ data class Character(
     constructor(character: CharactersPayload.DataPayload.Characters) : this (
         id = character.Id,
         name = character.name,
+        description = character.description,
         urlImage = character.image.path+"/",
         extension = "."+character.image.extension
     )
-    constructor() : this("", "", "", "")
+    constructor() : this("","", "", "", "")
 
     fun setImage(imageView: ImageView, aspectRatio: ImageAspectRatio, size: ImageSize) {
         Picasso.get()
