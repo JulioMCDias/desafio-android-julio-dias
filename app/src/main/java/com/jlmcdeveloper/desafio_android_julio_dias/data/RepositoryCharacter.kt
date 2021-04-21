@@ -6,7 +6,7 @@ import com.jlmcdeveloper.desafio_android_julio_dias.data.model.Character
 
 class RepositoryCharacter(private val marvelDataSource: MarvelDataSource, private val character: Character) {
 
-    private val listCharacter = mutableListOf<Character>()
+    val listCharacter = mutableListOf<Character>()
     var running = false
 
     fun moreCharacter(success : (MutableList<Character>) -> Unit, failure: (String) -> Unit) {

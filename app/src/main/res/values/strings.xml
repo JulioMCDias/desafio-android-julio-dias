@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Desafio-android</string>
+    <string name="error_in_list">Não a nada na lista</string>
+    <string name="update_list">Atualizar</string>
+    <string name="character_photo">character Photo</string>
 </resources>
