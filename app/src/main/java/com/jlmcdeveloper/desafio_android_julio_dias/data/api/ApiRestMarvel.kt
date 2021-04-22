@@ -18,9 +18,9 @@ interface ApiRestMarvel {
 
 
     @GET("/v1/public/characters/{characterId}/comics")
-    fun listHQs(@Query("apikey") apikey: String,
+    fun listHQs(@Path("characterId") user: String,
+                @Query("apikey") apikey: String,
                 @Query("ts") ts: Int,
-                @Query("hash") hash: String,
-                @Path("characterId") user: String):
+                @Query("hash") hash: String):
             Call<HQPayload>
 }

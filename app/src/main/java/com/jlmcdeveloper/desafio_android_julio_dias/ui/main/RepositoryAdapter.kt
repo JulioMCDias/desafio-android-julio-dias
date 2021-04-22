@@ -17,6 +17,7 @@ import com.jlmcdeveloper.desafio_android_julio_dias.ui.baseholder.BaseViewHolder
 import com.jlmcdeveloper.desafio_android_julio_dias.ui.baseholder.EmptyHolder
 import com.jlmcdeveloper.desafio_android_julio_dias.ui.baseholder.LoadingHolder
 import com.jlmcdeveloper.desafio_android_julio_dias.ui.character.CharacterActivity
+import com.squareup.picasso.Picasso
 
 class RepositoryAdapter(
     private val viewModel: MainViewModel,
@@ -93,7 +94,13 @@ class RepositoryAdapter(
 
         override fun bind(item: Character?) {
             binding.character = item
-            item?.setImage(binding.imageUser, ImageAspectRatio.STANDARD, ImageSize.XLARGE)
+            item?.let {
+                Picasso.get()
+                    .load(it.getUrlImage(ImageAspectRatio.STANDARD, ImageSize.XLARGE))
+                    .into(binding.imageUser)
+            }
+
+
             binding.executePendingBindings()
 
             // ----- abrir activity -----

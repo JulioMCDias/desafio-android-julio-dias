@@ -14,6 +14,11 @@ class HQPayload(
             @SerializedName("id") val Id: String,
             val title: String,
             val description: String,
-            val prices: String)
+            val prices: List<Price>?,
+            @SerializedName("thumbnail") val image: Thumbnail){
+
+            class Price(val type: String, val price: Float)
+            class Thumbnail(val path : String, val extension : String)
+        }
     }
 }

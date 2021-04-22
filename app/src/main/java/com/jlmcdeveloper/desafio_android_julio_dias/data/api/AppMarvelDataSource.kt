@@ -48,10 +48,10 @@ class AppMarvelDataSource(private val apiRest: ApiRestMarvel) : MarvelDataSource
     override fun listHQs(idCharacter: Character, success: (List<HQ>) -> Unit,
                          failure: (String) -> Unit) {
 
-        val call =apiRest.listHQs(ApiEndPoint.apikey,
+        val call =apiRest.listHQs(idCharacter.id,
+            ApiEndPoint.apikey,
             ApiEndPoint.ts,
-            ApiEndPoint.hash,
-            idCharacter.id)
+            ApiEndPoint.hash)
 
         call.enqueue(object : Callback<HQPayload> {
             override fun onResponse(call: Call<HQPayload>,

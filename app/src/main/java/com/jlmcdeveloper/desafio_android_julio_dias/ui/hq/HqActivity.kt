@@ -1,42 +1,39 @@
-package com.jlmcdeveloper.desafio_android_julio_dias.ui.character
+package com.jlmcdeveloper.desafio_android_julio_dias.ui.hq
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.View
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jlmcdeveloper.desafio_android_julio_dias.R
-import com.jlmcdeveloper.desafio_android_julio_dias.databinding.ActivityCharacterBinding
+import com.jlmcdeveloper.desafio_android_julio_dias.databinding.ActivityHqBinding
 import com.jlmcdeveloper.desafio_android_julio_dias.databinding.ActivityMainBinding
-import com.jlmcdeveloper.desafio_android_julio_dias.ui.hq.HqActivity
 import com.jlmcdeveloper.desafio_android_julio_dias.ui.main.MainViewModel
 import com.jlmcdeveloper.desafio_android_julio_dias.ui.main.RepositoryAdapter
 import com.squareup.picasso.Picasso
 import org.koin.android.ext.android.inject
 
-class CharacterActivity : AppCompatActivity() {
-    private val viewModel: CharacterViewModel by inject()
-    lateinit var binding: ActivityCharacterBinding
+class HqActivity : AppCompatActivity() {
+    private val viewModel: HqViewModel by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_character)
+        val binding: ActivityHqBinding =
+            DataBindingUtil.setContentView(this, R.layout.activity_hq)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-        setSupportActionBar(binding.toolbarCharacter)
+        setSupportActionBar(binding.toolbarHQ)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        //------ botão para carregar activity hq --------
-        binding.btnSave.setOnClickListener {
-            this.startActivity(Intent(this, HqActivity::class.java))
-        }
+        // ----- mensagem de erro -------
+        viewModel.message.observe(this, {
+            Toast.makeText(this, it, Toast.LENGTH_LONG).show()
+        })
 
-        // ----- image -----
+        // ----- image HQ -----
         viewModel.image.observe(this ){
             Picasso.get()
                 .load(it)
@@ -48,6 +45,7 @@ class CharacterActivity : AppCompatActivity() {
         super.onStart()
         viewModel.load()
     }
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {

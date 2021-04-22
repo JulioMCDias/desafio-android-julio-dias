@@ -27,7 +27,7 @@ class MainViewModel(private val repository: RepositoryCharacter) : ViewModel(){
     }
 
 
-    // -- carregar lista se ainda não foi carregado --
+    // -- carregar lista se ainda não foi carregada --
     fun updateList() {
         loadListCharacter()
     }

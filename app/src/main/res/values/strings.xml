@@ -6,4 +6,5 @@
     <string name="actor">Personagem</string>
     <string name="image_character">personagem</string>
     <string name="hq_price">HQ de maior valor</string>
+    <string name="hq">HQ</string>
 </resources>

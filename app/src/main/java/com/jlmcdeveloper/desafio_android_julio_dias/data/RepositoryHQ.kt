@@ -22,9 +22,9 @@ class RepositoryHQ(private val marvelDataSource: MarvelDataSource, private val c
         }
     }
 
-    fun getHQPrice(hqs: List<HQ>): HQ{
+    private fun getHQPrice(hqs: List<HQ>): HQ{
         var hq = HQ()
-        hqs.forEach { if(it.price >= hq.price) hq = it}
+        hqs.forEach { if(it.price?:0f > hq.price!!) hq = it}
         return hq
     }
 }

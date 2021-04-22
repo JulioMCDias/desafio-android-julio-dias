@@ -7,24 +7,24 @@
         <import type="android.view.View" />
         <variable
             name="viewModel"
-            type="com.jlmcdeveloper.desafio_android_julio_dias.ui.character.CharacterViewModel" />
+            type="com.jlmcdeveloper.desafio_android_julio_dias.ui.hq.HqViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
 
-        tools:context=".ui.character.CharacterActivity">
+        tools:context=".ui.hq.HqActivity">
 
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbarCharacter"
+            android:id="@+id/toolbarHQ"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/colorPrimary"
             app:titleTextColor="@android:color/white"
             app:theme="@style/ToolBarStyle"
-            app:title="@string/actor"
+            app:title="@string/hq"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -37,7 +37,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbarCharacter">
+            app:layout_constraintTop_toBottomOf="@+id/toolbarHQ">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -63,7 +63,7 @@
                     android:layout_marginTop="10dp"
                     android:gravity="center"
                     android:maxLines="1"
-                    android:text="@{viewModel.name}"
+                    android:text="@{viewModel.title}"
                     android:textColor="@color/colorPrimary"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -84,23 +84,56 @@
                     app:layout_constraintVertical_bias="0.033"
                     tools:layout_editor_absoluteX="-12dp" />
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnSave"
-                    style="@style/TextButton"
-                    android:layout_width="180dp"
-                    android:layout_height="40dp"
-                    android:layout_marginVertical="12dp"
-                    android:text="@string/hq_price"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.497"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView3"
-                    app:layout_constraintVertical_bias="0.1" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_horizontal"
+                    app:layout_constraintTop_toBottomOf="@+id/textView3">
+
+                    <TextView
+                        android:id="@+id/textViewTypePrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="8dp"
+                        android:gravity="center"
+                        android:lines="1"
+                        android:text="@{viewModel.typePrice}"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="14sp"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:id="@+id/textViewPriceValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="8dp"
+                        android:gravity="center"
+                        android:lines="1"
+                        android:text="@{viewModel.price}"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="14sp"
+                        android:textStyle="normal" />
+
+                </LinearLayout>
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
+
+
+        <androidx.core.widget.ContentLoadingProgressBar
+            android:id="@+id/pb_loading"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{viewModel.loadingHQ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/toolbarHQ" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

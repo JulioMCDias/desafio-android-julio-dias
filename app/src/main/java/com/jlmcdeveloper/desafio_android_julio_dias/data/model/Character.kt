@@ -23,9 +23,8 @@ data class Character(
     )
     constructor() : this("","", "", "", "")
 
-    fun setImage(imageView: ImageView, aspectRatio: ImageAspectRatio, size: ImageSize) {
-        Picasso.get()
-                .load(urlImage + aspectRatio.aspectRatio + size.size+ extension)
-                .into(imageView)
+
+    fun getUrlImage(aspectRatio: ImageAspectRatio, size: ImageSize): String {
+        return urlImage + aspectRatio.aspectRatio + size.size+ extension
     }
 }
