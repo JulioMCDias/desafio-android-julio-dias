@@ -14,7 +14,10 @@ class CharacterViewModel(private val repository: RepositoryCharacter) : ViewMode
     //--------- carregamento incial ---------
     fun load(){
         name.postValue(repository.character.name)
-        description.postValue(repository.character.description)
+        if(repository.character.description.isNotBlank())
+            description.postValue(repository.character.description)
+        else
+            description.postValue("sem descrição")
         setImage()
     }
 

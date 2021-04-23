@@ -9,18 +9,18 @@ import retrofit2.http.Query
 
 interface ApiRestMarvel {
     @GET("/v1/public/characters")
-    fun listCharacters(@Query("apikey") apikey: String,
+    suspend fun listCharacters(@Query("apikey") apikey: String,
                        @Query("ts") ts: Int,
                        @Query("hash") hash: String,
                        @Query("offset") perPage: Int,
                        @Query("limit") page: Int):
-            Call<CharactersPayload>
+            CharactersPayload
 
 
     @GET("/v1/public/characters/{characterId}/comics")
-    fun listHQs(@Path("characterId") user: String,
+    suspend fun listHQs(@Path("characterId") user: String,
                 @Query("apikey") apikey: String,
                 @Query("ts") ts: Int,
                 @Query("hash") hash: String):
-            Call<HQPayload>
+            HQPayload
 }

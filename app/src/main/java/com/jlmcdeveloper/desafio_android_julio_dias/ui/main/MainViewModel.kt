@@ -2,11 +2,18 @@ package com.jlmcdeveloper.desafio_android_julio_dias.ui.main
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.jlmcdeveloper.desafio_android_julio_dias.data.RepositoryCharacter
 import com.jlmcdeveloper.desafio_android_julio_dias.data.model.Character
+import com.jlmcdeveloper.desafio_android_julio_dias.data.response.ResultRequired
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class MainViewModel(private val repository: RepositoryCharacter) : ViewModel(){
     val listData = MutableLiveData<MutableList<Character>>(mutableListOf())
+    val btnUpdate = MutableLiveData(false)
+    val txtEmpty = MutableLiveData(false)
     val loadingList = MutableLiveData(false)
     val loadingNewItems = MutableLiveData(false)
     val message = MutableLiveData<String>()
@@ -15,8 +22,8 @@ class MainViewModel(private val repository: RepositoryCharacter) : ViewModel(){
 
     //--- referencia para buscar novas paginas -----
     fun positionList(pos: Int){
-        if(!loadingList.value!! && !loadingNewItems.value!! && listData.value!!.isNotEmpty()) {
-            if (listData.value!!.size <= pos+1)
+        if(!loadingList.value!! && !loadingNewItems.value!! && repository.listCharacters.isNotEmpty()) {
+            if (repository.listCharacters.size <= pos+1)
                 loadListCharacter()
         }
     }
@@ -34,39 +41,50 @@ class MainViewModel(private val repository: RepositoryCharacter) : ViewModel(){
 
     //--------- carregamento incial ---------
     fun load(){
-        if(repository.listCharacter.size > 0)
-            listData.postValue(repository.listCharacter)
+        if(repository.listCharacters.size > 0)
+            listData.postValue(repository.listCharacters)
         else
             loadListCharacter()
     }
 
 
 
-    private fun error(info: String){
-        message.postValue(info)
-        loading(false)
-    }
-
-
     private fun loadListCharacter() {
         loading(true)
 
-        repository.moreCharacter({
-            listData.postValue(it)
-            loading(false)
-        },{ error("erro ao carregar a lista de Repositorios") })
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.getCharacters().collect {
+                loading(false)
+                when (it) {
+                    is ResultRequired.Success -> {
+                        if ((it.result).isNotEmpty())
+                            listData.postValue(repository.listCharacters)
+                    }
+
+                    is ResultRequired.Error -> {
+                        btnUpdate.postValue(true)
+                        message.postValue("erro:"+ (it.throwable?.message ?: "desconhecido"))
+                    }
+                }
+            }
+        }
     }
 
 
     private fun loading(value: Boolean){
         if(value){
-            if (listData.value!!.isEmpty() || !value)
+            if (repository.listCharacters.isEmpty() || !value) {
                 loadingList.postValue(true)
-            else
+                btnUpdate.postValue(false)
+                txtEmpty.postValue(false)
+            }else
                 loadingNewItems.postValue(true)
         }else {
             loadingList.postValue(false)
             loadingNewItems.postValue(false)
+            if(repository.listCharacters.isEmpty()) {
+                txtEmpty.postValue(true)
+            }
         }
     }
 }

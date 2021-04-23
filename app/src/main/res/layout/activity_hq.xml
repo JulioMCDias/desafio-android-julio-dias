@@ -31,6 +31,7 @@
 
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_margin="32dp"
@@ -57,7 +58,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/textView"
+                    android:id="@+id/textViewName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -70,7 +71,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
                 <TextView
-                    android:id="@+id/textView3"
+                    android:id="@+id/textViewDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -80,7 +81,7 @@
                     android:textSize="14sp"
                     android:textStyle="normal"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewName"
                     app:layout_constraintVertical_bias="0.033"
                     tools:layout_editor_absoluteX="-12dp" />
 
@@ -89,9 +90,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:orientation="horizontal"
                     android:gravity="center_horizontal"
-                    app:layout_constraintTop_toBottomOf="@+id/textView3">
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewDescription">
 
                     <TextView
                         android:id="@+id/textViewTypePrice"
@@ -119,22 +120,47 @@
 
                 </LinearLayout>
 
+                <androidx.core.widget.ContentLoadingProgressBar
+                    android:id="@+id/pb_loading"
+                    style="?android:attr/progressBarStyleLarge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="@{viewModel.loadingHQ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnUpdate"
+                    style="@style/TextButton"
+                    android:layout_width="200dp"
+                    android:layout_height="47dp"
+                    android:layout_margin="12dp"
+                    android:onClick="@{() -> viewModel.load()}"
+                    android:text="@string/update_list"
+                    android:visibility="@{viewModel.btnUpdate? View.VISIBLE : View.GONE}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.497"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtEmpty" />
+
+                <TextView
+                    android:id="@+id/txtEmpty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="@string/error_in_list"
+                    android:textSize="20sp"
+                    android:visibility="@{viewModel.txtEmpty? View.VISIBLE : View.GONE}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
-
-
-        <androidx.core.widget.ContentLoadingProgressBar
-            android:id="@+id/pb_loading"
-            style="?android:attr/progressBarStyleLarge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="@{viewModel.loadingHQ? View.VISIBLE : View.GONE}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/toolbarHQ" />
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

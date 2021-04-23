@@ -1,27 +1,31 @@
 package com.jlmcdeveloper.desafio_android_julio_dias.data
 
 import com.jlmcdeveloper.desafio_android_julio_dias.data.api.ApiEndPoint
-import com.jlmcdeveloper.desafio_android_julio_dias.data.api.MarvelDataSource
+import com.jlmcdeveloper.desafio_android_julio_dias.data.mapper.AndroidCharacterMapper
+import com.jlmcdeveloper.desafio_android_julio_dias.data.source.MarvelDataSource
 import com.jlmcdeveloper.desafio_android_julio_dias.data.model.Character
+import com.jlmcdeveloper.desafio_android_julio_dias.data.response.ResultRemote
+import com.jlmcdeveloper.desafio_android_julio_dias.data.response.ResultRequired
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+
 
 class RepositoryCharacter(private val marvelDataSource: MarvelDataSource, val character: Character) {
+    val listCharacters = mutableListOf<Character>()
 
-    val listCharacter = mutableListOf<Character>()
-    var running = false
 
-    fun moreCharacter(success : (MutableList<Character>) -> Unit, failure: (String) -> Unit) {
-        if(!running) {
-            running = true
+    private fun getPage(): Int{
+        return (listCharacters.size / ApiEndPoint.perPage) + 1
+    }
 
-            marvelDataSource.listCharacter(getPage(), success = {
-                listCharacter.addAll(it)
-                success(listCharacter)
-                running= false
 
-            }, failure = {
-                failure(it)
-                running = false
-            })
+
+    fun getCharacters(): Flow<ResultRequired<List<Character>>> {
+        return flow{
+            val response = getCharacterRemote()
+            if(response is ResultRequired.Success)
+                listCharacters.addAll(response.result)
+            emit(response)
         }
     }
 
@@ -35,7 +39,23 @@ class RepositoryCharacter(private val marvelDataSource: MarvelDataSource, val ch
         }
     }
 
-    private fun getPage(): Int{
-        return (listCharacter.size / ApiEndPoint.perPage) + 1
+
+
+    private suspend fun getCharacterRemote(): ResultRequired<List<Character>> {
+
+        return when(val resultRemote = marvelDataSource.listCharacter(getPage())) {
+            is ResultRemote.Success -> {
+                ResultRequired.Success(
+                    result = AndroidCharacterMapper.map(resultRemote.response)
+                )
+            }
+            is ResultRemote.ErrorResponse.TokenExpired ->
+                ResultRequired.Error(Throwable("TokenExpired"))
+            is ResultRemote.ErrorResponse.EmptyParameter ->
+                ResultRequired.Error(Throwable("EmptyParameter"))
+            is ResultRemote.ErrorResponse ->
+                ResultRequired.Error(resultRemote.throwable)
+            else -> ResultRequired.Error(null)
+        }
     }
 }

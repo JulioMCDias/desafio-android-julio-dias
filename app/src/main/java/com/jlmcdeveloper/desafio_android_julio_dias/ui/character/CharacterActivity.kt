@@ -1,25 +1,18 @@
 package com.jlmcdeveloper.desafio_android_julio_dias.ui.character
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.View
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.jlmcdeveloper.desafio_android_julio_dias.R
 import com.jlmcdeveloper.desafio_android_julio_dias.databinding.ActivityCharacterBinding
-import com.jlmcdeveloper.desafio_android_julio_dias.databinding.ActivityMainBinding
 import com.jlmcdeveloper.desafio_android_julio_dias.ui.hq.HqActivity
-import com.jlmcdeveloper.desafio_android_julio_dias.ui.main.MainViewModel
-import com.jlmcdeveloper.desafio_android_julio_dias.ui.main.RepositoryAdapter
 import com.squareup.picasso.Picasso
-import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CharacterActivity : AppCompatActivity() {
-    private val viewModel: CharacterViewModel by inject()
+    private val viewModel: CharacterViewModel by viewModel()
     lateinit var binding: ActivityCharacterBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,11 +21,17 @@ class CharacterActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
+        setupView()
+    }
+
+
+
+    private fun setupView() {
         setSupportActionBar(binding.toolbarCharacter)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         //------ botão para carregar activity hq --------
-        binding.btnSave.setOnClickListener {
+        binding.btnHQUpValue.setOnClickListener {
             this.startActivity(Intent(this, HqActivity::class.java))
         }
 
@@ -43,6 +42,7 @@ class CharacterActivity : AppCompatActivity() {
                 .into(binding.imageView)
         }
     }
+
 
     override fun onStart() {
         super.onStart()

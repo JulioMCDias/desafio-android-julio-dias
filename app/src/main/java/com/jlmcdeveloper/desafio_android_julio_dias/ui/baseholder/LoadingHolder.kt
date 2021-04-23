@@ -7,5 +7,5 @@ import com.jlmcdeveloper.desafio_android_julio_dias.databinding.ItemLoadingBindi
 class LoadingHolder<T>( binding: ItemLoadingBinding) :
     BaseViewHolder<T>(binding.root) {
 
-    override fun bind(item: T?) { }
+    override fun bind(item: T) { }
 }
