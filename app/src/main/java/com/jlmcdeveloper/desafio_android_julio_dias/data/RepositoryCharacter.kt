@@ -15,7 +15,7 @@ class RepositoryCharacter(private val marvelDataSource: MarvelDataSource, val ch
 
 
     private fun getPage(): Int{
-        return (listCharacters.size / ApiEndPoint.perPage) + 1
+        return (listCharacters.size / ApiEndPoint.perPage)
     }
 
 

@@ -21,7 +21,6 @@ class RepositoryHQ(private val marvelDataSource: MarvelDataSource, private val c
             else if (response is ResultRequired.Error)
                 emit(response)
         }
-
     }
 
 
